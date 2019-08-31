@@ -5,6 +5,9 @@ using namespace std;
 
 int main()
 {
+    SetConsoleTitle(" Escola Geek");
+    system("color 9f"); /* Muda a cor do fundo */
+    
     int verificador=2;
     MenuInicial(verificador);
 
@@ -14,10 +17,10 @@ int main()
 }
 
 
-//Criar o menu do case 4 do menu principal (Menu de funcionarios, onde ele só pode alterar dados especificos, como nome,sexo telefone e locall)
-//Fazer tratamento de erro para os menus e funções !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Criar o menu do case 4 do menu principal (Menu de funcionarios, onde ele sÃ³ pode alterar dados especificos, como nome,sexo telefone e locall)
+//Fazer tratamento de erro para os menus e funÃ§Ãµes !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //PADRONIZAR TODOS  OS MENUS IMPRESSOS NA TELA DO USUARIO ex: Frase para voltar ao menu anterior, etc etc etc
-//Caso queiram fazer tratamento de erro para verificar se o id ou matricula informados já existem, usem as funções verificaArquivoprof,aluno etc
+//Caso queiram fazer tratamento de erro para verificar se o id ou matricula informados jÃ¡ existem, usem as funÃ§Ãµes verificaArquivoprof,aluno etc
 
 
 

@@ -6,6 +6,8 @@
 #include <conio.h>
 #include <iomanip>
 #include <stdio.h>
+#include "graphicLibrary.h"
+
 using namespace std;
 typedef double* pontmedia;
 const char* ArquivoAlunos = "Alunos.txt";
@@ -101,7 +103,7 @@ void CriarArquivoFun(char *arquivofun)
         ofstream saida(arquivofun, ios::out | ios::trunc);
         if (saida.fail())
         {
-            cout << "Não foi possivel acessar o arquivo!" << endl;
+            cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
             exit(1);
         }
 
@@ -109,12 +111,13 @@ void CriarArquivoFun(char *arquivofun)
 
         for (int i = 0; i < MAXFUNCIONARIOS; i++)
             saida.write((const char *)(&fichaVazia), sizeof(StructFuns));
+        namespaceGraphic::createFile();
         cout << "\nArquivo criado com sucesso!" << endl;
         saida.close();
     }
     else
     {
-        cout << "\nOperação cancelada!" << endl;
+        cout << "\nOperaÃ§Ã£o cancelada!" << endl;
     }
     getch();
 }
@@ -125,47 +128,48 @@ void CadastrarFun(char *arquivofun)
     saida.open(arquivofun, ios::out | ios::in | ios::ate);
     if (saida.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
-    cout << "      Cadastro de  Funcionário           " << endl;
+    cout << "      Cadastro de  FuncionÃ¡rio           " << endl;
     cout << "                                          " << endl;
     do
     {
-    cout << "Entre com o ID do Funcionário " << endl;
+    cout << "Entre com o ID do FuncionÃ¡rio " << endl;
     cin >> fun.id;
     }while(VerificaArquivoFun(fun.id)!=0);
     if ((fun.id > 0) && (fun.id <= MAXFUNCIONARIOS))
     {
         fstream saida;
         saida.open(arquivofun, ios::out | ios::in | ios::ate);
-        cout<<"Informe o nome do funcionário"<<endl;
+        cout<<"Informe o nome do funcionÃ¡rio"<<endl;
         fflush(stdin);
         cin.getline(fun.nome,50);
-        cout<<"Informe o cargo do funcionário na escola"<<endl;
+        cout<<"Informe o cargo do funcionÃ¡rio na escola"<<endl;
         fflush(stdin);
         cin.getline(fun.cargo,50);
-        cout<<"Informe o sexo do funcionário "<<endl;
+        cout<<"Informe o sexo do funcionÃ¡rio "<<endl;
         fflush(stdin);
         cin.getline(fun.sexo,15);
-        cout<<"Informe o telefone para contato do funcionário"<<endl;
+        cout<<"Informe o telefone para contato do funcionÃ¡rio"<<endl;
         fflush(stdin);
         cin.getline(fun.telefone,15);
-        cout<<"Informe o endereço do funcionário"<<endl;
+        cout<<"Informe o endereÃ§o do funcionÃ¡rio"<<endl;
         fflush(stdin);
         cin.getline(fun.local,50);
-        cout<<"Informe o salário que o funcionário irá receber"<<endl;
+        cout<<"Informe o salÃ¡rio que o funcionÃ¡rio irÃ¡ receber"<<endl;
         cin>>fun.salario;
 
         saida.seekp((fun.id - 1) * sizeof(StructFuns));
         saida.write((const char *)(&fun), sizeof(StructFuns));
-        cout << "\nFuncionário inserido com sucesso!" << endl;
+        namespaceGraphic::insertFuncionario();
+        cout << "\nFuncionÃ¡rio inserido com sucesso!" << endl;
         getch();
     }
     else
     {
-        cout << "Não foi possivel inserir o funcionário!" << endl;
+        cout << "NÃ£o foi possivel inserir o funcionÃ¡rio!" << endl;
         getch();
     }
     saida.close();
@@ -179,13 +183,13 @@ void AlterarDadosFun(char *arquivofun)
 
     if (saida.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
     FunSpace::ListarFuncionarios(arquivofun);
     cout << endl;
-    cout << "Menu de alteração de dados do funcionario " << endl;
+    cout << "Menu de alteraÃ§Ã£o de dados do funcionario " << endl;
     cout << "                                                               ";
     cout << endl;
 
@@ -207,28 +211,29 @@ void AlterarDadosFun(char *arquivofun)
         cout <<"Entre com o cargo a ser alterado"<<endl;
         fflush(stdin);
         cin.getline(fun.cargo,50);
-        cout <<"Entre com o sexo do funcionário a ser alterado"<<endl;
+        cout <<"Entre com o sexo do funcionÃ¡rio a ser alterado"<<endl;
         fflush(stdin);
         cin.getline(fun.sexo,15);
-        cout <<"Entre com o novo telefone do funcionário"<<endl;
+        cout <<"Entre com o novo telefone do funcionÃ¡rio"<<endl;
         fflush(stdin);
         cin.getline(fun.telefone,15);
-        cout <<"Entre com o novo endereço do funcionário"<<endl;
+        cout <<"Entre com o novo endereÃ§o do funcionÃ¡rio"<<endl;
         fflush(stdin);
         cin.getline(fun.local,50);
-        cout <<"Entre com o novo salario do funcionário"<<endl;
+        cout <<"Entre com o novo salario do funcionÃ¡rio"<<endl;
         cin >> fun.salario;
 
         saida.seekp((fun.id - 1) * sizeof(StructFuns));
         saida.write((const char *)(&fun), sizeof(StructFuns));
         cout << "\nDados atualizados com sucesso!" << endl;
+        namespaceGraphic::updateData();
         cout <<"Pressione qualquer tecla para continuar"<<endl;
         getch();
         saida.close();
     }
     else
     {
-        cout << "Funcionário não encontrado!" << endl;
+        cout << "FuncionÃ¡rio nÃ£o encontrado!" << endl;
         getch();
         saida.close();
     }
@@ -244,7 +249,7 @@ int VerificaArquivoFun(int id)
       entrada.read((char*)(&LerFun),sizeof(StructFuns));
         if(id==LerFun.id)
         {
-            cout<<"O dado informado já existe no arquivo, informe outro para evitar conflito no arquivo."<<endl;
+            cout<<"O dado informado jÃ¡ existe no arquivo, informe outro para evitar conflito no arquivo."<<endl;
             return 1;
         }
     entrada.read((char*)(&LerFun),sizeof(StructFuns));
@@ -263,7 +268,7 @@ void RemoveFuncionario(char *arquivofun)
 
     if (entrada.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
         exit(1);
     }
     StructFuns fun;
@@ -284,13 +289,13 @@ void RemoveFuncionario(char *arquivofun)
 
         cout << setiosflags(ios::left)
              << setw(5) << "ID"
-             << setw(15) << "Funcionário"
+             << setw(15) << "FuncionÃ¡rio"
              << setw(15) << "Cargo"
              << setw(8) << "Sexo"
              << setw(15) << "Telefone"
              << setw(10) << "Local"
              << resetiosflags(ios::left)
-             << setw(10) << "Salário" << endl;
+             << setw(10) << "SalÃ¡rio" << endl;
 
         cout << setiosflags(ios::left)
              << setw(5) << fun.id
@@ -303,7 +308,7 @@ void RemoveFuncionario(char *arquivofun)
              << setiosflags(ios::fixed | ios::showpoint) << fun.salario << '\n';
 
         char opcao;
-        cout << "\nDeseja mesmo remover este funcionário [s/n] ? ";
+        cout << "\nDeseja mesmo remover este funcionÃ¡rio [s/n] ? ";
         cin >> opcao;
         if ((opcao == 's') || (opcao == 'S'))
         {
@@ -311,24 +316,25 @@ void RemoveFuncionario(char *arquivofun)
             StructFuns fichaVazia = {0, " ", " ", " ", " ", " ", 0.0};
             if (saida.fail())
             {
-                cout << "Não foi possivel acessar o arquivo!" << endl;
+                cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
                 exit(1);
             }
 
             saida.seekp((fun.id - 1) * sizeof(StructFuns));
             saida.write((const char *)(&fichaVazia), sizeof(StructFuns));
             saida.close();
-            cout << "\nFuncionário Removido com sucesso!" << endl;
+            namespaceGraphic::removeFuncionario();
+            cout << "\nFuncionÃ¡rio Removido com sucesso!" << endl;
             getch();
         }
         else
         {
-            cout << "\nOperação Cancelada!" << endl;
+            cout << "\nOperaÃ§Ã£o Cancelada!" << endl;
         }
     }
     else
     {
-        cout << "\nFuncionário não encontrado!" << endl;
+        cout << "\nFuncionÃ¡rio nÃ£o encontrado!" << endl;
         getch();
     }
 }
@@ -339,23 +345,23 @@ void ListarFuncionarios(char *arquivofun)
 
     if (entrada.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "NÃ£o foi possivel acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
 
-    cout << " Lista de Funcionários" << endl;
+    cout << " Lista de FuncionÃ¡rios" << endl;
     cout << "                                                                 ";
     cout << setiosflags(ios::left)
          << endl
          << setw(5) << "ID"
-         << setw(15) << "Funcionário"
+         << setw(15) << "FuncionÃ¡rio"
          << setw(15) << "Cargo"
          << setw(8) << "Sexo"
          << setw(15) << "Telefone"
          << setw(10) << "Local"
          << resetiosflags(ios::left)
-         << setw(10) << "Salário" << endl;
+         << setw(10) << "SalÃ¡rio" << endl;
 
     for (int counter = 0; counter <= MAXFUNCIONARIOS; counter++)
     {
@@ -398,7 +404,7 @@ void MenuInicial(int verificadordelogin)
     {
         cout <<"Bem vindo ao Menu Principal "<<endl;
         cout <<"    "<<endl;
-        cout<< "O que voce deseja acessar?\n[1]- Menu da Coordenação\n[2]- Menu do Professor\n[3]- Menu do Aluno\n[4]- Menu do Funcionario\n[5]- Informações sobre o programa \n[6]- Encerrar o programa"<<endl;
+        cout<< "O que voce deseja acessar?\n[1]- Menu da CoordenaÃ§Ã£o\n[2]- Menu do Professor\n[3]- Menu do Aluno\n[4]- Menu do Funcionario\n[5]- InformaÃ§Ãµes sobre o programa \n[6]- Encerrar o programa"<<endl;
         cin>>Menu;
 
         switch(Menu)
@@ -409,7 +415,7 @@ void MenuInicial(int verificadordelogin)
             cin >> senha;
             if(senha==senhapadrao)
             {
-                cout << "Bem Vindo ao menu da coordenação!";
+                cout << "Bem Vindo ao menu da coordenaÃ§Ã£o!";
                 MenuCoordenacao();
             }
             else
@@ -442,7 +448,7 @@ void MenuInicial(int verificadordelogin)
              ListarAlunoUnico();
             break;
         case 4:
-            cout<<"FALTA IMPLEMENTAÇÃO"<<endl;
+            cout<<"FALTA IMPLEMENTAÃ‡ÃƒO"<<endl;
             //cout<<"Bem vindo ao menu do funcionario"<<endl;
             //MenuCordFun();
             break;
@@ -469,9 +475,9 @@ void MenuCoordenacao()
     system("CLS");
     do
     {
-        cout<<"Bem vindo ao menu da coordenação"<<endl;
-        cout<<"Agora informe a opção que você deseja acessar:\n 1- Dados dos Alunos \n 2- Dados de professores \n 3- Dados dos funcionarios \n 4- Voltar ao menu principal"<<endl;
-        cout <<"Informe a opção desejada: ";
+        cout<<"Bem vindo ao menu da coordenaÃ§Ã£o"<<endl;
+        cout<<"Agora informe a opÃ§Ã£o que vocÃª deseja acessar:\n 1- Dados dos Alunos \n 2- Dados de professores \n 3- Dados dos funcionarios \n 4- Voltar ao menu principal"<<endl;
+        cout <<"Informe a opÃ§Ã£o desejada: ";
         cin>>opnovo;
         system("cls");
         switch(opnovo)
@@ -508,7 +514,7 @@ void DadosAlunos()
     char op='s';
     do
     {
-        cout<< "O que deseja fazer ?\n[1]-Iniciar ou formatar o arquivo do aluno\n[2]-Listar Alunos\n[3]-Cadastrar aluno\n[4] Para alterar os dados do aluno\n[5]-Remover aluno\n[6]-Voltar ao menu da coordenação"<<endl;
+        cout<< "O que deseja fazer ?\n[1]-Iniciar ou formatar o arquivo do aluno\n[2]-Listar Alunos\n[3]-Cadastrar aluno\n[4] Para alterar os dados do aluno\n[5]-Remover aluno\n[6]-Voltar ao menu da coordenaÃ§Ã£o"<<endl;
         cin>>menucord;
         system("cls");
         switch(menucord)
@@ -552,7 +558,7 @@ void IniciarArquivoAlunos()
     if (arquivo.is_open())
     {
         StructAlunos Vazio= {0, " "," ", " "," "," "," ", 0.0, 0.0, 0.0, 0.0, 0};
-        cout<<"Você deseja criar ou formatar o arquivo dos alunos do zero?"<<endl
+        cout<<"VocÃª deseja criar ou formatar o arquivo dos alunos do zero?"<<endl
             << "S para sim e N para nao"<<endl;
         cin>>opchar;
         if(opchar=='s' || opchar == 'S')
@@ -605,14 +611,14 @@ void CadastraAlunos()
     cout<<"Digite o nome do pai do aluno"<<endl;
     fflush(stdin);
     cin.getline(Inserir.NomePai,50);
-    cout<<"Digite o nome da mãe do aluno"<<endl;
+    cout<<"Digite o nome da mÃ£e do aluno"<<endl;
     fflush(stdin);
     cin.getline(Inserir.NomeMae,50);
     cout<<"Digite o sexo do aluno(m ou f)"<<endl;
     cin>>Inserir.Sexo;
     cout<<"Informe o telefone para contato do aluno"<<endl;
     cin>>Inserir.Telefone;
-    cout<<"Informe o endereço do aluno"<<endl;
+    cout<<"Informe o endereÃ§o do aluno"<<endl;
     fflush(stdin);
     cin.getline(Inserir.Endereco,50);
     arquivo.seekp((Inserir.Matricula-1)*sizeof(StructAlunos));
@@ -694,7 +700,7 @@ void ListarAlunoUnicoCord()
     fstream arquivo;
     StructAlunos listar;
     arquivo.open(ArquivoAlunos,ios::in);
-    cout << "Informe sua matrícula" <<endl;
+    cout << "Informe sua matrÃ­cula" <<endl;
     cin >> listar.Matricula;
     system("cls");
 
@@ -707,10 +713,10 @@ void ListarAlunoUnicoCord()
          << setw(10) << "Matricula"
          << setw(15) << "Nome"
          << setw(15) << "Nome do Pai"
-         << setw(15) << "Nome da Mãe"
+         << setw(15) << "Nome da MÃ£e"
          << setw(10) << "Sexo"
          << setw(20) << "Telefone"
-         <<setw(20) << "Endereço"<<endl;
+         <<setw(20) << "EndereÃ§o"<<endl;
 
     arquivo.seekp((listar.Matricula-1)*sizeof(StructAlunos));
     arquivo.read((char*)(&listar),sizeof(StructAlunos));
@@ -735,7 +741,7 @@ void AtualizarAluno()
     fstream  arquivo;
 
     arquivo.open(ArquivoAlunos,ios::out|ios::in|ios::ate);
-    cout<<"Informe a matrícula do Aluno que você deseja atualizar dados:"<<endl;
+    cout<<"Informe a matrÃ­cula do Aluno que vocÃª deseja atualizar dados:"<<endl;
     cin>>inserir.Matricula;
 
     arquivo.seekg((inserir.Matricula-1)*sizeof(StructAlunos));
@@ -743,7 +749,7 @@ void AtualizarAluno()
 
     do
     {
-        cout<< "O que você deseja atualizar?\n[1]-Nome do aluno\n[2]-Nome do Pai\n[3]-Nome da Mãe\n[4]-Sexo\n[5]-Telefone\n[6]-Endereço\n[7]-Voltar"<<endl;
+        cout<< "O que vocÃª deseja atualizar?\n[1]-Nome do aluno\n[2]-Nome do Pai\n[3]-Nome da MÃ£e\n[4]-Sexo\n[5]-Telefone\n[6]-EndereÃ§o\n[7]-Voltar"<<endl;
         cin>>Menuatualizar;
         system("CLS");
 
@@ -766,7 +772,7 @@ void AtualizarAluno()
             system("CLS");
             break;
         case 3:
-            cout<<"Informe o novo Nome da Mãe: "<<endl;
+            cout<<"Informe o novo Nome da MÃ£e: "<<endl;
             fflush(stdin);
             cin.getline(inserir.NomeMae,50);
             arquivo.seekp((inserir.Matricula-1)*sizeof(StructAlunos));
@@ -788,7 +794,7 @@ void AtualizarAluno()
             system("CLS");
             break;
         case 6:
-            cout<<"Informe o novo endereço do aluno"<<endl;
+            cout<<"Informe o novo endereÃ§o do aluno"<<endl;
             fflush(stdin);
             cin.getline(inserir.Endereco,50);
             arquivo.seekp((inserir.Matricula-1)*sizeof(StructAlunos));
@@ -819,7 +825,7 @@ void RemoverAluno()
         getch();
     }
 
-    cout<<"Informe a matrícula do aluno que você deseja remover: "<<endl;
+    cout<<"Informe a matrÃ­cula do aluno que vocÃª deseja remover: "<<endl;
     cin>>inserir.Matricula;
     arquivo.seekp((inserir.Matricula-1)*sizeof(StructAlunos));
 
@@ -845,7 +851,7 @@ void DadosFun()
         if(opcao<0 && opcao>5)
             do
             {
-                cout<<"Opção inválida! Informe uma opção válida, por favor."<<endl;
+                cout<<"OpÃ§Ã£o invÃ¡lida! Informe uma opÃ§Ã£o vÃ¡lida, por favor."<<endl;
                 cin>>opcao;
             }
             while(opcao<0 || opcao>5);
@@ -879,14 +885,14 @@ void DadosProf()
     int  op,aux;
     do
     {
-        cout<<"O que você deseja acessar nos dados dos professores?"<<endl;
+        cout<<"O que vocÃª deseja acessar nos dados dos professores?"<<endl;
         cout<<"1 - Para criar ou recriar o arquivo dos  professores\n2 - Para cadastar um professor ao sistema\n3 - Para listar todos os professores cadastrados\n4 - Para remover um professor cadastrado\n5 - Para voltar ao menu anterior"<<endl;
         cin>>op;
         if(op<1 || op>5)
         {
             do
             {
-                cout<<"Opção inválida! Informe uma opção válida, por favor."<<endl;
+                cout<<"OpÃ§Ã£o invÃ¡lida! Informe uma opÃ§Ã£o vÃ¡lida, por favor."<<endl;
                 cin>>aux;
             }
             while(aux<1 || aux>5);
@@ -925,15 +931,15 @@ void IniciarArquivoProf()
 
     if (arquivo.is_open())
     {
-        cout <<"Bem vindo a função de criar ou recriar arquivo de professores!"<<endl;
+        cout <<"Bem vindo a funÃ§Ã£o de criar ou recriar arquivo de professores!"<<endl;
         StructProfessor Vazio= {0," "," "," ", " ", 0.0};
-        cout<<"Você deseja criar o arquivo dos professores do zero?"<<endl
+        cout<<"VocÃª deseja criar o arquivo dos professores do zero?"<<endl
             << "S para sim e N para nao"<<endl;
         cin>>opchar;
         if(opchar=='s' || opchar == 'S')
         {
             opchar= ' ';
-            cout<<"Tem certeza? O arquivo professores irá ser criado ou formatado."<<endl;
+            cout<<"Tem certeza? O arquivo professores irÃ¡ ser criado ou formatado."<<endl;
             cin>>opchar;
             if(opchar=='s'||opchar=='S')
             {
@@ -973,7 +979,7 @@ void CadastraProf()
     cout<<"Informe o sexo"<<endl;
     fflush(stdin);
     cin.getline(Cadastro.sexo,25);
-    cout<<"Informe o endereço do professor"<<endl;
+    cout<<"Informe o endereÃ§o do professor"<<endl;
     fflush(stdin);
     cin.getline(Cadastro.endereco,50);
     cout<<"Informe o telefone"<<endl;
@@ -981,7 +987,7 @@ void CadastraProf()
     cin.getline(Cadastro.telefone,15);
     do
     {
-        cout<<"Informe o salário"<<endl;
+        cout<<"Informe o salÃ¡rio"<<endl;
         cin>>Cadastro.salario;
     }while(Cadastro.salario<0);
     arquivo.seekp((Cadastro.id-1)*sizeof(StructProfessor));
@@ -995,7 +1001,7 @@ void MenuProfessor()
     system("cls");
     do
     {
-        cout<<"O que você deseja, professor?"<<endl;
+        cout<<"O que vocÃª deseja, professor?"<<endl;
         cout<<"1 - Para colocar faltas nos alunos\n2 -Para inserir as notas dos alunos\n3 - Para voltar ao menu principal"<<endl;
         cin>>op;
         switch(op)
@@ -1024,7 +1030,7 @@ void InsereFaltas()
         getch();
     }
 
-    cout<<"informe a matrícula do Aluno que você deseja atualizar as faltas"<<endl;
+    cout<<"informe a matrÃ­cula do Aluno que vocÃª deseja atualizar as faltas"<<endl;
     cin>>inserir.Matricula;
 
     arquivo.seekg((inserir.Matricula-1)*sizeof(StructAlunos));
@@ -1063,17 +1069,17 @@ void FuncaoAlunoMenu()
         << setw(15) << "Matricula"
         << setw(15) << "Nome"
         << setw(15) << "Nome do Pai"
-        << setw(15) << "Nome da Mãe"
+        << setw(15) << "Nome da MÃ£e"
         << setw(10) << "Sexo"
         << setw(10) << "Telefone"
         << resetiosflags(ios::left)
-        << setw(10) << "1ª Nota"
-        << setw(10) << "2ª Nota"
-        << setw(10) << "3ª Nota"
-        << setw(10) << "4ª Nota"
+        << setw(10) << "1Âª Nota"
+        << setw(10) << "2Âª Nota"
+        << setw(10) << "3Âª Nota"
+        << setw(10) << "4Âª Nota"
         << setw(10) <<  "Faltas"
-        << setw(10) <<  "Média"
-        << setw(15) <<  "Situação" <<endl;
+        << setw(10) <<  "MÃ©dia"
+        << setw(15) <<  "SituaÃ§Ã£o" <<endl;
 
         arquivo.read((char*)(&listar),sizeof(StructAlunos));
         pontmedia med;
@@ -1118,10 +1124,10 @@ void FuncaoAlunoMenu()
                 }
                 if(mediafinal<6.0){
                     if(faltascomp<=25){
-                        cout << setw(15) << " Reprovado por Média!" << endl;
+                        cout << setw(15) << " Reprovado por MÃ©dia!" << endl;
                     }
                     else{
-                        cout << setw(15) << " Reprovado por Média e Faltas!" << endl;
+                        cout << setw(15) << " Reprovado por MÃ©dia e Faltas!" << endl;
                     }  if(mediafinal>=6.0){
                     if(faltascomp<=25){
                         cout << setiosflags(ios::right)
@@ -1161,37 +1167,37 @@ void FuncaoAlunoMenu()
             getch();
     }
 
-    cout<<"Informe a matricula do aluno que você deseja atualizar as notas:"<<endl;
+    cout<<"Informe a matricula do aluno que vocÃª deseja atualizar as notas:"<<endl;
     cin>>InserirNotasAlunos.Matricula;
 
     arquivo.seekg((InserirNotasAlunos.Matricula-1)*sizeof(StructAlunos));
     arquivo.read((char*)(&InserirNotasAlunos),sizeof(StructAlunos));
 
     do{
-       cout<< "Que nota você deseja alterar? [1]- 1ª Nota\n[2]- 2ª Nota\n[3]- 3ª Nota\n[4]- 4ª Nota\n[5]- Sair"<<endl;
+       cout<< "Que nota vocÃª deseja alterar? [1]- 1Âª Nota\n[2]- 2Âª Nota\n[3]- 3Âª Nota\n[4]- 4Âª Nota\n[5]- Sair"<<endl;
        cin>>Menuatualizar;
           switch(Menuatualizar)
           {
             case 1:
-                cout<<"Informe a nova 1ª Nota: "<<endl;
+                cout<<"Informe a nova 1Âª Nota: "<<endl;
                 cin>>InserirNotasAlunos.Nota1;
                 arquivo.seekp((InserirNotasAlunos.Matricula-1)*sizeof(StructAlunos));
                 arquivo.write((const char*)(&InserirNotasAlunos),sizeof(StructAlunos));
                 break;
             case 2:
-                cout<<"Informe a nova 2ª Nota: "<<endl;
+                cout<<"Informe a nova 2Âª Nota: "<<endl;
                 cin>>InserirNotasAlunos.Nota2;
                 arquivo.seekp((InserirNotasAlunos.Matricula-1)*sizeof(StructAlunos));
                 arquivo.write((const char*)(&InserirNotasAlunos),sizeof(StructAlunos));
                 break;
             case 3:
-                cout<<"Informe a nova 3ª Nota: "<<endl;
+                cout<<"Informe a nova 3Âª Nota: "<<endl;
                 cin>>InserirNotasAlunos.Nota3;
                 arquivo.seekp((InserirNotasAlunos.Matricula-1)*sizeof(StructAlunos));
                 arquivo.write((const char*)(&InserirNotasAlunos),sizeof(StructAlunos));
                 break;
             case 4:
-                cout<<"Informe a nova 4ª Nota: "<<endl;
+                cout<<"Informe a nova 4Âª Nota: "<<endl;
                 cin>>InserirNotasAlunos.Nota4;
                 arquivo.seekp((InserirNotasAlunos.Matricula-1)*sizeof(StructAlunos));
                 arquivo.write((const char*)(&InserirNotasAlunos),sizeof(StructAlunos));
@@ -1227,16 +1233,16 @@ void ListarAlunoUnico()
         << setw(10) << "Matricula"
         << setw(15) << "Nome"
         << setw(15) << "Nome do Pai"
-        << setw(15) << "Nome da Mãe"
+        << setw(15) << "Nome da MÃ£e"
         << setw(10) << "Sexo"
         << setw(20) << "Telefone"
-        << setw(10) << "1ªNota"
-        << setw(10) << "2ªNota"
-        << setw(10) << "3ªNota"
-        << setw(10) << "4ªNota"
+        << setw(10) << "1ÂªNota"
+        << setw(10) << "2ÂªNota"
+        << setw(10) << "3ÂªNota"
+        << setw(10) << "4ÂªNota"
         << setw(10) << "Faltas"
-        << setw(10) <<  "Média"
-        << setw(15) <<  "Situação" <<endl;
+        << setw(10) <<  "MÃ©dia"
+        << setw(15) <<  "SituaÃ§Ã£o" <<endl;
 
         arquivo.seekp((listar.Matricula-1)*sizeof(StructAlunos));
         arquivo.read((char*)(&listar),sizeof(StructAlunos));
@@ -1280,10 +1286,10 @@ void ListarAlunoUnico()
                 }
                 if(mediafinal<6.0){
                     if(faltascomp<=25){
-                        cout << setw(12) << " Reprovado por Média!" << endl;
+                        cout << setw(12) << " Reprovado por MÃ©dia!" << endl;
                     }
                     else{
-                        cout << setw(15) << " Reprovado por Média e Faltas!" << endl;
+                        cout << setw(15) << " Reprovado por MÃ©dia e Faltas!" << endl;
                     }
                 }
 

@@ -1,0 +1,6 @@
+Menu principal possui 5 funcoes
+Menu da coordenação possui 3 opcoes para alterar dados dos usuarios: alunos, professores e funcionarios da escola
+Menu dos professores possui 3 opcoes onde o professor pode alterar notas, listar e incluir faltas nos alunos
+Menu dos alunos possui uma opção onde o aluno informa a matricula e o programa mostra sua situação em relação a notas, media e situação de aprovação.
+Menu dos funcionarios possui uma opção onde o funcionario pode trocar seus dados cadastrados como endereço etc e olhar seu salario.
+Informações sobre escola: Onde mostra as informações de contato da escola.

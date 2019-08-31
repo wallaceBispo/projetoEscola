@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1567277340 source:c:\users\rafael rezende\projetodozero\projetoescolanovo\main.cpp
+	<iostream>
+	"Funcoes.h"
+
+1567287540 c:\users\rafael rezende\projetodozero\projetoescolanovo\funcoes.h
+	<iostream>
+	<windows.h>
+	<string.h>
+	<fstream>
+	<locale.h>
+	<conio.h>
+	<iomanip>
+	<stdio.h>
+

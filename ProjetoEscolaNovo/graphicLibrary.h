@@ -17,62 +17,66 @@ void insertFuncionario()
 {
     int i;
     int vet[26];
-    cout << "Inserindo funcionario..." << endl;
+    cout << endl
+         << "Inserindo funcionario " ;
     for (i = 0; i < 26; i++)
     {
-        textcolor(YELLOW + 3);
-        printf("%c", *(vet + i));
+        printf(".", *(vet + i));
         Sleep(100);
     }
-    textcolor(WHITE);
+    cout << endl;
 }
 void createFile()
 {
+    int i;
     int vet[26];
-    cout << "Criando arquivo...\n";
-    for (int i = 0; i < 26; i++)
+    cout << endl
+         << "Criando arquivo ";
+    for ( i = 0; i < 26; i++)
     {
-        textcolor(YELLOW + 3);
-        printf("%c", *(vet + i));
+        printf(".", *(vet + i));
         Sleep(100);
     }
-    textcolor(WHITE);
+    cout << endl;
 }
 void updateData()
 {
+    int i;
     int vet[26];
-    cout << "Atualizando dados...\n";
-    for (int i = 0; i < 26; i++)
+    cout << endl
+         << "Atualizando dados ";
+    for (i = 0; i < 26; i++)
     {
-        textcolor(YELLOW + 3);
-        printf("%c", *(vet + i));
+        printf(".", *(vet + i));
         Sleep(100);
     }
-    textcolor(WHITE);
+    cout << endl;
 }
 void removeFuncionario()
 {
+    int i;
     int vet[26];
-    cout << "Removendo Funcionario...\n";
-    for (int i = 0; i < 26; i++)
+    cout << endl
+         << "Removendo Funcionario ";
+    for (i = 0; i < 26; i++)
     {
-        textcolor(YELLOW + 3);
-        printf("%c", *(vet + i));
+        printf(".", *(vet + i));
         Sleep(100);
     }
-    textcolor(WHITE);
+    cout << endl;
 }
 void exitAplication()
 {
+    int i;
     int vet[26];
     system("cls");
-    cout << "Saindo da aplicacao...\n";
-    for (int i = 0; i < 26; i++)
+    cout << endl
+         << "Saindo da aplicacao ";
+    for (i = 0; i < 26; i++)
     {
-        textcolor(YELLOW + 3);
-        printf("%c", *(vet + i));
+        printf(".", *(vet + i));
         Sleep(100);
     }
-    textcolor(WHITE);
+    cout << endl;
 }
 } // namespace namespaceGraphic

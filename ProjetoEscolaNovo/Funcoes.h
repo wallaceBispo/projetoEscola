@@ -3,7 +3,7 @@
 #include <string.h>
 #include <fstream>
 #include <locale.h>
-#include <conio.h>
+#include <conio2.h>
 #include <iomanip>
 #include <stdio.h>
 #include "graphicLibrary.h"
@@ -103,7 +103,7 @@ void CriarArquivoFun(char *arquivofun)
         ofstream saida(arquivofun, ios::out | ios::trunc);
         if (saida.fail())
         {
-            cout << "Não foi possivel acessar o arquivo!" << endl;
+            cout << "Não foi possível acessar o arquivo!" << endl;
             exit(1);
         }
 
@@ -128,7 +128,7 @@ void CadastrarFun(char *arquivofun)
     saida.open(arquivofun, ios::out | ios::in | ios::ate);
     if (saida.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "Não foi possível acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
@@ -169,7 +169,7 @@ void CadastrarFun(char *arquivofun)
     }
     else
     {
-        cout << "Não foi possivel inserir o funcionário!" << endl;
+        cout << "Não foi possível inserir o funcionário!" << endl;
         getch();
     }
     saida.close();
@@ -183,18 +183,18 @@ void AlterarDadosFun(char *arquivofun)
 
     if (saida.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "Não foi possível acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
     FunSpace::ListarFuncionarios(arquivofun);
     cout << endl;
-    cout << "Menu de alteração de dados do funcionario " << endl;
+    cout << "Menu de alteração de dados do funcionário " << endl;
     cout << "                                                               ";
     cout << endl;
 
     int id;
-    cout << "Digite o ID do funcionario a ser atualizado: ";
+    cout << "Digite o ID do funcionário a ser atualizado: ";
     cin >> id;
 
     saida.seekg((id - 1) * sizeof(StructFuns));
@@ -220,7 +220,7 @@ void AlterarDadosFun(char *arquivofun)
         cout <<"Entre com o novo endereço do funcionário"<<endl;
         fflush(stdin);
         cin.getline(fun.local,50);
-        cout <<"Entre com o novo salario do funcionário"<<endl;
+        cout <<"Entre com o novo salário do funcionário"<<endl;
         cin >> fun.salario;
 
         saida.seekp((fun.id - 1) * sizeof(StructFuns));
@@ -258,27 +258,23 @@ int VerificaArquivoFun(int id)
 }
 
 
-
-
-
-
 void RemoveFuncionario(char *arquivofun)
 {
     ifstream entrada(arquivofun);
 
     if (entrada.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "Não foi possível acessar o arquivo!" << endl;
         exit(1);
     }
     StructFuns fun;
 
     system("CLS");
     cout << endl;
-    cout << "Remover Funcionario " << endl;
+    cout << "Remover Funcionário " << endl;
 
     int id;
-    cout << "Digite o ID do Funcionario a ser removido:";
+    cout << "Digite o ID do Funcionário a ser removido:";
     cin >> id;
 
     entrada.seekg((id - 1) * sizeof(StructFuns));
@@ -316,7 +312,7 @@ void RemoveFuncionario(char *arquivofun)
             StructFuns fichaVazia = {0, " ", " ", " ", " ", " ", 0.0};
             if (saida.fail())
             {
-                cout << "Não foi possivel acessar o arquivo!" << endl;
+                cout << "Não foi possável acessar o arquivo!" << endl;
                 exit(1);
             }
 
@@ -345,7 +341,7 @@ void ListarFuncionarios(char *arquivofun)
 
     if (entrada.fail())
     {
-        cout << "Não foi possivel acessar o arquivo!" << endl;
+        cout << "Não foi possível acessar o arquivo!" << endl;
         exit(1);
     }
     system("CLS");
@@ -390,11 +386,11 @@ void ListarFuncionarios(char *arquivofun)
 }
 void MenuInicial(int verificadordelogin)
 {
-    setlocale(LC_ALL,"portuguese");
-    int Menu;
-    int senha;
-    int senhapadrao=9999;
-    int senhapadraop=1000;
+    int Menu, i, inteiro;
+    char senha[10] = "";
+    char senhaa[12] = "";
+    char senhapadrao[12] = "senhapadrao";
+    char senhapadraop[10] = "professor";
     if (verificadordelogin<0)
     {
         cout << "Tentativa de logins excedidas, por favor inicie o programa novamente."<<endl;
@@ -402,20 +398,95 @@ void MenuInicial(int verificadordelogin)
     }
     do
     {
-        cout <<"Bem vindo ao Menu Principal "<<endl;
-        cout <<"    "<<endl;
-        cout<< "O que voce deseja acessar?\n[1]- Menu da Coordenação\n[2]- Menu do Professor\n[3]- Menu do Aluno\n[4]- Menu do Funcionario\n[5]- Informações sobre o programa \n[6]- Encerrar o programa"<<endl;
+        textcolor(LIGHTBLUE);
+        textbackground(WHITE);
+
+        gotoxy(15, 5);
+        cout <<"                                                                                            ";
+        gotoxy(15, 6);
+        cout <<"                                 BEM VINDO AO MENU PRINCIPAL                                ";
+        gotoxy(15, 7);
+        cout <<"                                                                                            ";
+
+        cout <<endl;
+        gotoxy(15, 11);
+        cout << "                            ";
+        gotoxy(15, 12);
+        cout << "  1- Menu da Coordenação  ";
+        gotoxy(15, 13);
+        cout << "                            ";
+
+        gotoxy(15, 15);
+        cout << "                            ";
+        gotoxy(15, 16);
+        cout << "    2- Menu do Professor    ";
+        gotoxy(15, 17);
+        cout << "                            ";
+
+        gotoxy(15, 19);
+        cout << "                            ";
+        gotoxy(15, 20);
+        cout << "      3- Menu do Aluno      ";
+        gotoxy(15, 21);
+        cout << "                            ";
+
+        gotoxy(79, 11);
+        cout << "                            ";
+        gotoxy(79, 12);
+        cout << "   4- Menu do Funcionario   ";
+        gotoxy(79, 13);
+        cout << "                            ";
+
+        gotoxy(79, 15);
+        cout << "                            ";
+        gotoxy(79, 16);
+        cout << " 5- Info. sobre o programa  ";
+        gotoxy(79, 17);
+        cout << "                            ";
+
+        gotoxy(79, 19);
+        cout << "                            ";
+        gotoxy(79, 20);
+        cout << "   6- Encerrar o programa   ";
+        gotoxy(79, 21);
+        cout << "                            ";
+
+        gotoxy(53,25);
+        cout << "Digite a opção: " << endl;
+        gotoxy(60,26);
         cin>>Menu;
 
         switch(Menu)
         {
         case 1:
             system("CLS");
-            cout <<"Informe sua senha, coordenador :\n";
-            cin >> senha;
-            if(senha==senhapadrao)
+            system("color 9f"); /* Muda a cor do fundo */
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                              ENTRE COM A SENHA DO CORDENADOR                               ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+            gotoxy(15, 9);
+            textcolor(WHITE);
+            textbackground(LIGHTBLUE);
+            cout << "Senha: ";
+            for(int i = 0; i < 11; i++)
             {
-                cout << "Bem Vindo ao menu da coordenação!";
+               *(senhaa + i) = getch();
+               printf("*");
+            }
+
+            inteiro = strcmp(senhaa, senhapadrao);
+            if(inteiro == 0)
+            {
+                textcolor(WHITE);
+                textbackground(LIGHTBLUE);
+                getch();
+                namespaceGraphic::verificarSenha();
                 MenuCoordenacao();
             }
             else
@@ -427,10 +498,21 @@ void MenuInicial(int verificadordelogin)
         case 2:
             system("CLS");
             cout <<"Informe sua senha, professor:\n";
-            cin >> senha;
-            if(senha==senhapadraop)
+            cout << "Senha:";
+
+            for(int i = 0; i < 9; i++)
             {
-                cout << "Bem vindo ao menu do professor";
+               *(senha + i) = getch();
+               printf("*");
+            }
+
+            inteiro = strcmp(senha, senhapadraop);
+
+            if(inteiro == 0)
+            {
+                cout << endl
+                     <<"Bem vindo ao menu do professor";
+                getch();
                 system("cls");
                 MenuProfessor();
             }
@@ -476,8 +558,11 @@ void MenuCoordenacao()
     do
     {
         cout<<"Bem vindo ao menu da coordenação"<<endl;
-        cout<<"Agora informe a opção que você deseja acessar:\n 1- Dados dos Alunos \n 2- Dados de professores \n 3- Dados dos funcionarios \n 4- Voltar ao menu principal"<<endl;
-        cout <<"Informe a opção desejada: ";
+        cout<<"Informe a opção que você deseja acessar:\n"
+            <<"[1] - Dados dos Alunos \n 2- Dados de professores \n"
+            <<"[3]- Dados dos funcionarios \n"
+            <<"[4]- Voltar ao menu principal"<<endl;
+        cout <<"Digite a opção: ";
         cin>>opnovo;
         system("cls");
         switch(opnovo)
@@ -515,6 +600,7 @@ void DadosAlunos()
     do
     {
         cout<< "O que deseja fazer ?\n[1]-Iniciar ou formatar o arquivo do aluno\n[2]-Listar Alunos\n[3]-Cadastrar aluno\n[4] Para alterar os dados do aluno\n[5]-Remover aluno\n[6]-Voltar ao menu da coordenação"<<endl;
+        cout << "Digite a opção: ";
         cin>>menucord;
         system("cls");
         switch(menucord)
@@ -531,7 +617,7 @@ void DadosAlunos()
             do
             {
                 CadastraAlunos();
-                cout<<"Deseja cadastrar outro aluno?"<<endl;
+                cout<<"Deseja cadastrar outro aluno [s/n]?"<<endl;
                 cin>>op;
             }
             while(op=='s'||op=='S');
@@ -558,13 +644,14 @@ void IniciarArquivoAlunos()
     if (arquivo.is_open())
     {
         StructAlunos Vazio= {0, " "," ", " "," "," "," ", 0.0, 0.0, 0.0, 0.0, 0};
-        cout<<"Você deseja criar ou formatar o arquivo dos alunos do zero?"<<endl
+        cout<<"Você deseja criar ou formatar o arquivo dos alunos do zero [s/n]?"<<endl
             << "S para sim e N para nao"<<endl;
         cin>>opchar;
         if(opchar=='s' || opchar == 'S')
         {
             opchar= ' ';
-            cout<<"Tem certeza? O arquivo dos alunos ira ser criado ou formatado."<<endl;
+            cout<<"Tem certeza? O arquivo dos alunos ira ser criado ou formatado [s/n]."<<endl;
+            cout << "Digite a opção: ";
             cin>>opchar;
             if(opchar=='s'||opchar=='S')
             {
@@ -601,7 +688,7 @@ void CadastraAlunos()
     StructAlunos Inserir;
     do
     {
-        cout<<"Digite a matricula do aluno"<<endl;
+        cout<<"Digite a matrícula do aluno"<<endl;
         cin>> Inserir.Matricula;
 
     }while(VerificaArquivoAluno(Inserir.Matricula)!=0);
@@ -679,38 +766,23 @@ int VerificaArquivoFun(char* arquivofun,int id)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void ListarAlunoUnicoCord()
 {
     fstream arquivo;
     StructAlunos listar;
     arquivo.open(ArquivoAlunos,ios::in);
-    cout << "Informe sua matrícula" <<endl;
+    cout << "Informe sua matrícula: ";
     cin >> listar.Matricula;
     system("cls");
 
     if(arquivo.fail())
     {
         cout<<"Falha na abertura do arquivo! "<<endl;
+        exit(0);
     }
 
     cout << setiosflags(ios::left)
-         << setw(10) << "Matricula"
+         << setw(10) << "Matrícula"
          << setw(15) << "Nome"
          << setw(15) << "Nome do Pai"
          << setw(15) << "Nome da Mãe"
@@ -741,7 +813,8 @@ void AtualizarAluno()
     fstream  arquivo;
 
     arquivo.open(ArquivoAlunos,ios::out|ios::in|ios::ate);
-    cout<<"Informe a matrícula do Aluno que você deseja atualizar dados:"<<endl;
+    cout<<"Informe a matrícula do Aluno que você deseja atualizar dados."<<endl;
+    cout << "Digite a opção: ";
     cin>>inserir.Matricula;
 
     arquivo.seekg((inserir.Matricula-1)*sizeof(StructAlunos));
@@ -749,7 +822,8 @@ void AtualizarAluno()
 
     do
     {
-        cout<< "O que você deseja atualizar?\n[1]-Nome do aluno\n[2]-Nome do Pai\n[3]-Nome da Mãe\n[4]-Sexo\n[5]-Telefone\n[6]-Endereço\n[7]-Voltar"<<endl;
+        cout<< "O que deseja atualizar?\n[1]-Nome do aluno\n[2]-Nome do Pai\n[3]-Nome da Mãe\n[4]-Sexo\n[5]-Telefone\n[6]-Endereço\n[7]-Voltar"<<endl;
+        cout << "Digite a opção: ";
         cin>>Menuatualizar;
         system("CLS");
 
@@ -822,7 +896,7 @@ void RemoverAluno()
     if(arquivo.fail())
     {
         cout<<"Falha na abertura do arquivo!"<<endl;
-        getch();
+        exit(0);
     }
 
     cout<<"Informe a matrícula do aluno que você deseja remover: "<<endl;
@@ -840,6 +914,8 @@ void DadosFun()
     do
     {
         system("CLS");
+
+        cout << "O que deseja fazer?" << endl;
         cout << "1-Criar Arquivo Inicial" << endl;
         cout << "2-Inserir Funcionario" << endl;
         cout << "3-Listar Funcionarios" << endl;
@@ -851,7 +927,7 @@ void DadosFun()
         if(opcao<0 && opcao>5)
             do
             {
-                cout<<"Opção inválida! Informe uma opção válida, por favor."<<endl;
+                cout<<"Opção inválida! Informe uma opção válida, por favor: ";
                 cin>>opcao;
             }
             while(opcao<0 || opcao>5);

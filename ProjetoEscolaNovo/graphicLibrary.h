@@ -79,4 +79,16 @@ void exitAplication()
     }
     cout << endl;
 }
+void verificarSenha()
+{
+    int i;
+    int vet[32];
+    gotoxy(15, 11);
+    cout << "verificando " ;
+    for (i = 0; i < 32; i++)
+    {
+        printf(".", *(vet + i));
+        Sleep(100);
+    }
+}
 } // namespace namespaceGraphic

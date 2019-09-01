@@ -17,8 +17,8 @@ void insertFuncionario()
 {
     int i;
     int vet[26];
-    cout << endl
-         << "Inserindo funcionario " ;
+    gotoxy(15, 23);
+    cout <<"Inserindo funcionario " ;
     for (i = 0; i < 26; i++)
     {
         printf(".", *(vet + i));
@@ -30,8 +30,8 @@ void createFile()
 {
     int i;
     int vet[26];
-    cout << endl
-         << "Criando arquivo ";
+    gotoxy(15, 12);
+    cout <<"Criando arquivo ";
     for ( i = 0; i < 26; i++)
     {
         printf(".", *(vet + i));

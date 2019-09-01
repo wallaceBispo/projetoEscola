@@ -31,6 +31,7 @@ void AtualizarAluno();
 void FuncaoAlunoMenu();
 void AlterarNotasAluno();
 void ListarAlunoUnico();
+void MenuInicial(int verificadordelogin);
 
 
 int VerificaArquivoAluno(int matricula);
@@ -93,16 +94,33 @@ const int MAXFUNCIONARIOS = 100;
 void CriarArquivoFun(char *arquivofun)
 {
     system("CLS");
-    cout << "  CRIAR ARQUIVO INICIAL     " << endl;
+
+
+    system("color 9f"); /* Muda a cor do fundo */
+    textcolor(LIGHTBLUE);
+    textbackground(WHITE);
+
+    gotoxy(15, 5);
+    cout <<"                                                                                            ";
+    gotoxy(15, 6);
+    cout <<"                            CRIAR ARQUIVO INICIAL DO FUNCIONARIO                            ";
+    gotoxy(15, 7);
+    cout <<"                                                                                            ";
     char opcao;
-    cout << "\nIsso ira apagar sua base de dados!" << endl;
-    cout << "Deseja continuar [s/n] ? ";
+    textcolor(WHITE);
+    textbackground(RED);
+    gotoxy(30, 9);
+    cout << "Isso ira apagar sua base de dados! Deseja continuar [s/n] ? ";
     cin >> opcao;
+    textcolor(WHITE);
+    textbackground(LIGHTBLUE);
+
     if ((opcao == 's') || (opcao == 'S'))
     {
         ofstream saida(arquivofun, ios::out | ios::trunc);
         if (saida.fail())
         {
+            gotoxy(15, 12);
             cout << "Não foi possível acessar o arquivo!" << endl;
             exit(1);
         }
@@ -110,16 +128,29 @@ void CriarArquivoFun(char *arquivofun)
         StructFuns fichaVazia = {0, "", " ", " ", " ", " ", 0.0};
 
         for (int i = 0; i < MAXFUNCIONARIOS; i++)
-            saida.write((const char *)(&fichaVazia), sizeof(StructFuns));
+        saida.write((const char *)(&fichaVazia), sizeof(StructFuns));
         namespaceGraphic::createFile();
-        cout << "\nArquivo criado com sucesso!" << endl;
+        textcolor(WHITE);
+        textbackground(GREEN);
+        gotoxy(15,13);
+        cout << "Arquivo criado com sucesso!" << endl;
+        textcolor(WHITE);
+        textbackground(LIGHTBLUE);
+        gotoxy(15, 15);
+        cout << "Enter para continuar";
         saida.close();
     }
     else
     {
-        cout << "\nOperação cancelada!" << endl;
+        gotoxy(15, 15);
+        cout << "Operacao cancelada!" << endl;
     }
+    gotoxy(36,15);
     getch();
+    system("cls");
+
+    DadosFun();
+
 }
 void CadastrarFun(char *arquivofun)
 {
@@ -132,45 +163,78 @@ void CadastrarFun(char *arquivofun)
         exit(1);
     }
     system("CLS");
-    cout << "      Cadastro de  Funcionário           " << endl;
-    cout << "                                          " << endl;
+    textcolor(LIGHTBLUE);
+    textbackground(WHITE);
+    gotoxy(15, 5);
+    cout <<"                                                                                            ";
+    gotoxy(15, 6);
+    cout <<"                                   CADASTRO DE FUNCIONARIO                                  ";
+    gotoxy(15, 7);
+    cout <<"                                                                                            ";
+
     do
     {
-    cout << "Entre com o ID do Funcionário " << endl;
+    gotoxy(15, 9);
+    textcolor(WHITE);
+    textbackground(LIGHTBLUE);
+    cout << "Entre com o ID do Funcionário: ";
     cin >> fun.id;
     }while(VerificaArquivoFun(fun.id)!=0);
     if ((fun.id > 0) && (fun.id <= MAXFUNCIONARIOS))
     {
         fstream saida;
         saida.open(arquivofun, ios::out | ios::in | ios::ate);
-        cout<<"Informe o nome do funcionário"<<endl;
+        gotoxy(15, 11);
+        cout<<"Informe o nome do funcionário: ";
         fflush(stdin);
         cin.getline(fun.nome,50);
-        cout<<"Informe o cargo do funcionário na escola"<<endl;
+        gotoxy(15, 13);
+        cout<<"Informe o cargo do funcionário na escola: ";
         fflush(stdin);
         cin.getline(fun.cargo,50);
-        cout<<"Informe o sexo do funcionário "<<endl;
+        gotoxy(15, 15);
+        cout<<"Informe o sexo do funcionário: ";
         fflush(stdin);
         cin.getline(fun.sexo,15);
-        cout<<"Informe o telefone para contato do funcionário"<<endl;
+        gotoxy(15, 17);
+        cout<<"Informe o telefone para contato do funcionário: ";
         fflush(stdin);
         cin.getline(fun.telefone,15);
-        cout<<"Informe o endereço do funcionário"<<endl;
+        gotoxy(15, 19);
+        cout<<"Informe o endereço do funcionário: ";
         fflush(stdin);
         cin.getline(fun.local,50);
-        cout<<"Informe o salário que o funcionário irá receber"<<endl;
+        gotoxy(15, 21);
+        cout<<"Informe o salário que o funcionário irá receber: ";
         cin>>fun.salario;
 
         saida.seekp((fun.id - 1) * sizeof(StructFuns));
         saida.write((const char *)(&fun), sizeof(StructFuns));
         namespaceGraphic::insertFuncionario();
-        cout << "\nFuncionário inserido com sucesso!" << endl;
+
+        gotoxy(15, 25);
+         textcolor(WHITE);
+        textbackground(GREEN);
+        cout << "Funcionário inserido com sucesso!";
+        textcolor(WHITE);
+        textbackground(LIGHTBLUE);
+        gotoxy(15, 27);
+        cout <<"Enter para continuar";
         getch();
+        system("cls");
     }
     else
     {
-        cout << "Não foi possível inserir o funcionário!" << endl;
+        gotoxy(15, 12);
+        textcolor(WHITE);
+        textbackground(RED);
+        cout << "Não foi possível inserir o funcionário!";
+        gotoxy(15, 14);
+        textcolor(WHITE);
+        textbackground(LIGHTBLUE);
+        cout <<"Enter para continuar";
         getch();
+        system("cls");
     }
     saida.close();
 }
@@ -346,10 +410,18 @@ void ListarFuncionarios(char *arquivofun)
     }
     system("CLS");
 
-    cout << " Lista de Funcionários" << endl;
-    cout << "                                                                 ";
+    textcolor(LIGHTBLUE);
+    textbackground(WHITE);
+    gotoxy(15, 5);
+    cout <<"                                                                                            ";
+    gotoxy(15, 6);
+    cout <<"                                    LISTA DE FUNCIONARIOS                                   ";
+    gotoxy(15, 7);
+    cout <<"                                                                                            ";
+    textcolor(WHITE);
+    textbackground(WHITE+29);
+    gotoxy(15, 8);
     cout << setiosflags(ios::left)
-         << endl
          << setw(5) << "ID"
          << setw(15) << "Funcionário"
          << setw(15) << "Cargo"
@@ -366,6 +438,9 @@ void ListarFuncionarios(char *arquivofun)
 
         if ((fun.id > 0) && (strcmp(fun.nome, "") != 0))
         {
+            gotoxy(15, 9);
+            textcolor(WHITE);
+            textbackground(WHITE+ 18);
             cout << setiosflags(ios::left)
                  << setw(5) << fun.id
                  << setw(15) << fun.nome
@@ -377,9 +452,13 @@ void ListarFuncionarios(char *arquivofun)
                  << setiosflags(ios::fixed | ios::showpoint) << fun.salario << '\n';
         }
     }
-    cout << endl;
-    cout<<"Pressione qualquer tecla para continuar"<<endl;
+
+    gotoxy(15, 14);
+    textcolor(WHITE);
+    textbackground(LIGHTBLUE);
+    cout <<"Enter para continuar";
     getch();
+    system("cls");
     entrada.close();
 
 }
@@ -398,6 +477,7 @@ void MenuInicial(int verificadordelogin)
     }
     do
     {
+        system("color 9f"); /* Muda a cor do fundo */
         textcolor(LIGHTBLUE);
         textbackground(WHITE);
 
@@ -451,9 +531,10 @@ void MenuInicial(int verificadordelogin)
         gotoxy(79, 21);
         cout << "                            ";
 
+        textcolor(WHITE);
+        textbackground(LIGHTBLUE);
         gotoxy(53,25);
-        cout << "Digite a opção: " << endl;
-        gotoxy(60,26);
+        cout << "Digite a opção: ";
         cin>>Menu;
 
         switch(Menu)
@@ -467,7 +548,7 @@ void MenuInicial(int verificadordelogin)
             gotoxy(15, 5);
             cout <<"                                                                                            ";
             gotoxy(15, 6);
-            cout <<"                              ENTRE COM A SENHA DO CORDENADOR                               ";
+            cout <<"                              ENTRE COM A SENHA DO COORDENADOR                              ";
             gotoxy(15, 7);
             cout <<"                                                                                            ";
             gotoxy(15, 9);
@@ -483,21 +564,33 @@ void MenuInicial(int verificadordelogin)
             inteiro = strcmp(senhaa, senhapadrao);
             if(inteiro == 0)
             {
-                textcolor(WHITE);
-                textbackground(LIGHTBLUE);
                 getch();
                 namespaceGraphic::verificarSenha();
                 MenuCoordenacao();
             }
             else
             {
+                namespaceGraphic::verificarSenha();
+                gotoxy(15,15);
                 cout << "Senha Errada! Tente Novamente";
+                getch();
+                system("cls");
                 MenuInicial(verificadordelogin -1 );
             }
             break;
         case 2:
             system("CLS");
-            cout <<"Informe sua senha, professor:\n";
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                                INFORME A SENHA DO PREFESSOR                                ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+            gotoxy(15, 9);
+            textcolor(WHITE);
+            textbackground(LIGHTBLUE);
             cout << "Senha:";
 
             for(int i = 0; i < 9; i++)
@@ -510,29 +603,47 @@ void MenuInicial(int verificadordelogin)
 
             if(inteiro == 0)
             {
-                cout << endl
-                     <<"Bem vindo ao menu do professor";
                 getch();
-                system("cls");
+                namespaceGraphic::verificarSenha();
                 MenuProfessor();
             }
             else
             {
-                cout << "Senha Errada! Tente novamente pelo menu principal"<<endl;
-                cout <<"\n"<<endl;
+                namespaceGraphic::verificarSenha();
+                gotoxy(15,15);
+                cout << "Senha Errada! Tente Novamente";
+                getch();
+                system("cls");
                 MenuInicial(verificadordelogin -1 );
             }
             break;
         case 3:
             system("cls");
-            cout << "Bem vindo ao menu do aluno";
-            cout <<" \n"<<endl;
-             ListarAlunoUnico();
+            system("color 9f"); /* Muda a cor do fundo */
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                                 BEM VINDO AO MENU DO ALUNO                                 ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+            ListarAlunoUnico();
             break;
         case 4:
-            cout<<"FALTA IMPLEMENTAÇÃO"<<endl;
-            //cout<<"Bem vindo ao menu do funcionario"<<endl;
-            //MenuCordFun();
+            system("cls");
+            system("color 9f"); /* Muda a cor do fundo */
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                              BEM VINDO AO MENU DO FUNCIONARIO                              ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+            DadosFun();
             break;
         case 5:
             system("cls");
@@ -557,31 +668,67 @@ void MenuCoordenacao()
     system("CLS");
     do
     {
-        cout<<"Bem vindo ao menu da coordenação"<<endl;
-        cout<<"Informe a opção que você deseja acessar:\n"
-            <<"[1] - Dados dos Alunos \n 2- Dados de professores \n"
-            <<"[3]- Dados dos funcionarios \n"
-            <<"[4]- Voltar ao menu principal"<<endl;
-        cout <<"Digite a opção: ";
+            system("color 9f");
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                             BEM VINDO AO MENU DA COORDENAÇÃO                             ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+            gotoxy(15, 9);
+            cout <<"                          Informe a opção que você deseja acessar                        \n";
+
+            gotoxy(15, 14);
+            cout << "                            ";
+            gotoxy(15, 15);
+            cout << "    1- Dados dos Alunos     ";
+            gotoxy(15, 16);
+            cout << "                            ";
+
+            gotoxy(15, 18);
+            cout << "                            ";
+            gotoxy(15, 19);
+            cout << "  2- Dados de professores   ";
+            gotoxy(15, 20);
+            cout << "                            ";
+
+            gotoxy(79, 14);
+            cout << "                            ";
+            gotoxy(79, 15);
+            cout << " 3- Dados dos funcionarios  ";
+            gotoxy(79, 16);
+            cout << "                            ";
+
+            gotoxy(79, 18);
+            cout << "                            ";
+            gotoxy(79, 19);
+            cout << "4- Voltar ao menu principal ";
+            gotoxy(79, 20);
+            cout << "                            ";
+
+        gotoxy(54,25);
+        cout << "Digite a opção: ";
         cin>>opnovo;
+
         system("cls");
         switch(opnovo)
         {
         case 1:
             DadosAlunos();
-            cout<<"Pressione qualquer tecla para continuar"<<endl;
-            getch();
+            system("pause");
             system("cls");
             break;
         case 2:
             DadosProf();
-            cout<<"Pressione qualquer tecla para continuar."<<endl;
-            getch();
+            system("pause"); //Pressione qualquer tecla para continuar
             system("cls");
             break;
         case 3:
             DadosFun();
-            cout<<"Pressione qualquer tecla para continuar"<<endl;
+            system("pause");
             getch();
             system("cls");
             break;
@@ -599,9 +746,63 @@ void DadosAlunos()
     char op='s';
     do
     {
-        cout<< "O que deseja fazer ?\n[1]-Iniciar ou formatar o arquivo do aluno\n[2]-Listar Alunos\n[3]-Cadastrar aluno\n[4] Para alterar os dados do aluno\n[5]-Remover aluno\n[6]-Voltar ao menu da coordenação"<<endl;
+            system("color 9f");
+            textcolor(LIGHTBLUE);
+            textbackground(WHITE);
+
+            gotoxy(15, 5);
+            cout <<"                                                                                            ";
+            gotoxy(15, 6);
+            cout <<"                                     O QUE DESEJA FAZER                                     ";
+            gotoxy(15, 7);
+            cout <<"                                                                                            ";
+
+            gotoxy(15, 14);
+            cout << "                            ";
+            gotoxy(15, 15);
+            cout << " 1- Criar arquivo do aluno  ";
+            gotoxy(15, 16);
+            cout << "                            ";
+
+            gotoxy(15, 18);
+            cout << "                            ";
+            gotoxy(15, 19);
+            cout << "      2- Listar Alunos      ";
+            gotoxy(15, 20);
+            cout << "                            ";
+
+            gotoxy(15, 22);
+            cout << "                            ";
+            gotoxy(15, 23);
+            cout << "     3- Cadastrar aluno     ";
+            gotoxy(15, 24);
+            cout << "                            ";
+
+            gotoxy(79, 14);
+            cout << "                            ";
+            gotoxy(79, 15);
+            cout << "4- Alterar os dados do aluno";
+            gotoxy(79, 16);
+            cout << "                            ";
+
+            gotoxy(79, 18);
+            cout << "                            ";
+            gotoxy(79, 19);
+            cout << "      5- Remover aluno      ";
+            gotoxy(79, 20);
+            cout << "                            ";
+
+            gotoxy(79, 22);
+            cout << "                            ";
+            gotoxy(79, 23);
+            cout << "6- Volt. ao menu coordenacao";
+            gotoxy(79, 24);
+            cout << "                            ";
+
+        gotoxy(54,25);
         cout << "Digite a opção: ";
-        cin>>menucord;
+        cin >> menucord;
+
         system("cls");
         switch(menucord)
         {
@@ -913,24 +1114,69 @@ void DadosFun()
     int opcao;
     do
     {
-        system("CLS");
+        system("color 9f");
+        textcolor(LIGHTBLUE);
+        textbackground(WHITE);
+        gotoxy(15, 9);
+        cout <<"                                     O QUE DESEJA FAZER                                     ";
 
-        cout << "O que deseja fazer?" << endl;
-        cout << "1-Criar Arquivo Inicial" << endl;
-        cout << "2-Inserir Funcionario" << endl;
-        cout << "3-Listar Funcionarios" << endl;
-        cout << "4-Atualizar dados do funcionario" << endl;
-        cout << "5-Remover Funcionario" << endl;
-        cout << "0-Sair" << endl;
-        cout << "\nEscolha uma opcao: ";
+        gotoxy(15, 12);
+        cout << "                            ";
+        gotoxy(15, 13);
+        cout << "  1-Criar Arquivo Inicial   ";
+        gotoxy(15, 14);
+        cout << "                            ";
+
+        gotoxy(15, 16);
+        cout << "                            ";
+        gotoxy(15, 17);
+        cout << "   2-Inserir Funcionario    ";
+        gotoxy(15, 18);
+        cout << "                            ";
+
+        gotoxy(15, 20);
+        cout << "                            ";
+        gotoxy(15, 21);
+        cout << "   3-Listar Funcionarios    ";
+        gotoxy(15, 22);
+        cout << "                            ";
+
+        gotoxy(79, 12);
+        cout << "                            ";
+        gotoxy(79, 13);
+        cout << "4-Atua. dados do funcionario";
+        gotoxy(79, 14);
+        cout << "                            ";
+
+        gotoxy(79, 16);
+        cout << "                            ";
+        gotoxy(79, 17);
+        cout << "   5-Remover Funcionario    ";
+        gotoxy(79, 18);
+        cout << "                            ";
+
+        gotoxy(79, 20);
+        cout << "                            ";
+        gotoxy(79, 21);
+        cout << "           0-Sair           ";
+        gotoxy(79, 22);
+        cout << "                            ";
+
+
+        textcolor(WHITE);
+        textbackground(LIGHTBLUE);
+        gotoxy(54, 25);
+        cout << "Escolha uma opcao: ";
         cin >> opcao;
-        if(opcao<0 && opcao>5)
-            do
-            {
-                cout<<"Opção inválida! Informe uma opção válida, por favor: ";
-                cin>>opcao;
-            }
-            while(opcao<0 || opcao>5);
+
+        if(opcao < 0 || opcao > 5)
+        {
+            gotoxy(15, 26);
+            cout<<"Opção inválida! Informe uma opção válida, por favor: ";
+            getch();
+            system("cls");
+           DadosFun();
+        }
         switch (opcao)
         {
         case 1:
@@ -952,8 +1198,7 @@ void DadosFun()
 
     }
     while (opcao != 0);
-
-
+    MenuCoordenacao();
 }
 
 void DadosProf()
@@ -1295,7 +1540,10 @@ void ListarAlunoUnico()
      StructAlunos listar;
     arquivo.open(ArquivoAlunos,ios::in);
 
-    cout << "Informe sua matricula" <<endl;
+    gotoxy(15,12);
+    textcolor(WHITE);
+    textbackground(LIGHTBLUE);
+    cout << "Informe sua matricula: ";
     cin >> listar.Matricula;
     system("CLS");
 

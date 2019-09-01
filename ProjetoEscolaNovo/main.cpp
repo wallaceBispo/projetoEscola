@@ -7,7 +7,6 @@ int main()
 {
     setlocale(LC_ALL,"portuguese");
     SetConsoleTitle(" Gerenciamento escolar");
-    system("color 9f"); /* Muda a cor do fundo */
 
     int verificador=2;
     MenuInicial(verificador);

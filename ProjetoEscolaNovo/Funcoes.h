@@ -534,7 +534,7 @@ void MenuInicial(int verificadordelogin)
         textcolor(WHITE);
         textbackground(LIGHTBLUE);
         gotoxy(53,25);
-        cout << "Digite a opção: ";
+        cout << "Digite a opcao: ";
         cin>>Menu;
 
         switch(Menu)
@@ -1322,8 +1322,39 @@ void MenuProfessor()
     system("cls");
     do
     {
-        cout<<"O que você deseja, professor?"<<endl;
-        cout<<"1 - Para colocar faltas nos alunos\n2 -Para inserir as notas dos alunos\n3 - Para voltar ao menu principal"<<endl;
+        system("color 9f"); /* Muda a cor do fundo */
+        textcolor(LIGHTBLUE);
+        textbackground(WHITE);
+
+        gotoxy(15, 5);
+        cout <<"                                                                                            ";
+        gotoxy(15, 6);
+        cout <<"                                 O QUE VOCE DESEJA,PROFESSOR                                ";
+        gotoxy(15, 7);
+        cout <<"                                                                                            ";
+
+        gotoxy(15, 12);
+        cout << "                            ";
+        gotoxy(15, 13);
+        cout << "1- Colocar falt. nos alunos ";
+        gotoxy(15, 14);
+        cout << "                            ";
+
+        gotoxy(47, 12);
+        cout << "                            ";
+        gotoxy(47, 13);
+        cout << "2- inserir notas dos alunos ";
+        gotoxy(47, 14);
+        cout << "                            ";
+
+        gotoxy(79, 12);
+        cout << "                            ";
+        gotoxy(79, 13);
+        cout << "3- voltar ao menu principal ";
+        gotoxy(79, 14);
+        cout << "                            ";
+
+
         cin>>op;
         switch(op)
         {
